@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+
+<sqlMap namespace="notice">
+
+	<typeAlias alias="notice" type="notice.noticeVO" />
+
+	<resultMap class="notice" id="noticeRes">
+		<result property="n_no" column="n_no" />
+		<result property="n_subject" column="n_subject" />
+		<result property="n_content" column="n_content" />
+		<result property="n_file_orgname" column="n_file_orgname" />
+		<result property="n_readhit" column="n_readhit" />
+		<result property="n_regdate" column="n_regdate" />
+		<result property="n_file_savname" column="n_file_savName"/>
+	</resultMap>
+
+
+	<sql id="select-all">
+		SELECT * FROM NOTICE
+	</sql>
+
+	<sql id="where-no">
+		WHERE n_no=#n_no#
+	</sql>
+
+	<!-- select 쿼리문 정의 -->
+	<select id="selectAll" resultMap="noticeRes">
+		<include refid="select-all" />
+		ORDER BY n_no DESC
+	</select>
+
+
+	<!-- 상세보기 -->
+	<select id="selectOne" resultMap="noticeRes"
+		parameterClass="int">
+		<include refid="select-all" />
+		<include refid="where-no" />
+	</select>
+
+
+
+	<!-- 검색하기 -->
+	<select id="selectSearchS" resultMap="noticeRes"
+		parameterClass="String">
+		<include refid="select-all" />
+		WHERE n_subject like #searchKeyword# ORDER BY n_no DESC
+	</select>
+
+	<select id="selectSearchC" resultMap="noticeRes"
+		parameterClass="String">
+		<include refid="select-all" />
+		WHERE n_content like #searchKeyword# ORDER BY n_no DESC
+	</select>
+
+
+
+	<!-- 글번호의 최대값을 가져오기 -->
+	<select id="selectLastNo" resultClass="notice"
+		parameterClass="int">
+		SELECT max(n_no) as n_no FROM NOTICE
+	</select>
+
+	<!-- insert -->
+	<insert id="insertNotice" parameterClass="notice">
+		INSERT INTO
+		NOTICE(n_no,n_subject,n_content,n_readhit,n_regdate)
+		VALUES(NOTICE_NO_SEQ.NEXTVAL,#n_subject#,#n_content#,#n_readhit#,#n_regdate#)
+	</insert>
+
+	<!-- update -->
+	<update id="updateNotice" parameterClass="notice">
+		UPDATE NOTICE SET n_subject=#n_subject#,n_content=#n_content#
+		<include refid="where-no" />
+	</update>
+
+	<update id="updateFile" parameterClass="notice">
+		UPDATE NOTICE SET n_file_orgname=#n_file_orgname#, n_file_savname=#n_file_savname#
+		<include refid="where-no" />
+	</update>
+
+	<update id="updateReadHit" parameterClass="notice">
+		UPDATE NOTICE SET n_readhit = n_readhit + 1
+		<include refid="where-no" />
+	</update>
+
+	<!-- delete -->
+	<delete id="deleteNotice" parameterClass="notice">
+		DELETE FROM NOTICE
+		<include refid="where-no" />
+	</delete>
+
+</sqlMap>

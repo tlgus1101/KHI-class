@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+
+
+<sqlMap>
+
+	<typeAlias alias="reserv" type="reserv.ReservVO" />
+	<typeAlias alias="day" type="reserv.DateBean" /> 
+	
+	<resultMap id="reservRes" class="reserv">
+		<result property="r_no" column="r_no" />
+		<result property="q_date" column="q_date" />
+		<result property="q_dateStr" column="q_date" />
+		<result property="r_location" column="r_location" />
+		<result property="r_option" column="r_option" />
+		<result property="p_name" column="p_name" />
+		<result property="p_no" column="p_no" />
+		<result property="q_file_orgname" column="q_file_orgname" />
+		<result property="q_content" column="q_content" />
+		<result property="q_tell" column="q_tell" />
+		<result property="v_num" column="v_num" />
+		<result property="r_ok" column="r_ok" />
+
+	</resultMap>
+
+	<sql id="reserv_select_all">
+		select
+		r_no,q_date,r_location,r_option,p_name,p_no,q_file_orgname,q_content,q_tell,v_num,r_ok
+		from admin_Reservation
+	</sql>
+
+<!-- 	<sql id="reserv_select_date" >
+		<![CDATA[ where q_date < ADD_MONTHS(SYSDATE-$date$ ,$month$) 
+		AND q_date > ADD_MONTHS(SYSDATE-$date$-1,$month$) ]]>
+	</sql> -->
+
+
+	<sql id="reserv_select_date" >
+		<![CDATA[ where q_date >= #firstday# AND q_date < #endday# ]]>
+
+	</sql>
+	
+	<select id="ReservAll" resultMap="reservRes" >
+			<include refid="reserv_select_all" />
+	ORDER BY q_date DESC 
+		</select>
+
+	<select id="ReservDay" resultMap="reservRes" parameterClass="day" >
+			<include refid="reserv_select_all" />
+			<include refid="reserv_select_date" />
+			ORDER BY q_date DESC
+		</select>
+		
+	<select id="ReservOkDay" resultMap="reservRes" parameterClass="day" >
+			<include refid="reserv_select_all" />
+			<include refid="reserv_select_date" />
+			AND r_ok=1 ORDER BY q_date DESC
+		</select>
+
+	<sql id="reserv_count">
+	select count(*) from admin_Reservation
+	</sql>
+	
+	<sql id="reserv_count_date">
+		<![CDATA[ where q_date >= #firstday# AND q_date < #endday# ]]> <!--  AND r_ok = 1 -->
+	</sql>
+	
+	<select id="ReservAll_count"  parameterClass="day">
+			<include refid="reserv_count" />
+		</select>
+		
+		<!-- w지금 추가한부 -->
+	<!-- <sql id="reserv_count_str">
+		select * from admin_Reservation
+	</sql>
+	
+	<select id="ReservAll_count_str" parameterClass="day"
+		resultMap="reservRes">
+		<include refid="reserv_count_str" />
+		<include refid="reserv_count_date" />
+	</select>  -->
+	<!-- w지금 추가한부 -->		
+
+	<select id="ReservDay_count" resultClass="int" parameterClass="day"> 
+			<include refid="reserv_count" />
+			<include refid="reserv_count_date" />
+			AND r_ok = 1
+		</select> 
+		
+	<select id="ReservDayOver_count" resultClass="int" parameterClass="day"> 
+			<include refid="reserv_count" />
+			<include refid="reserv_count_date" />
+		</select> 
+
+
+	<select id="ReservView" resultMap="reservRes" parameterClass="int">
+			<include refid="reserv_select_all" />
+			where r_no = #r_no# ORDER BY q_date DESC
+		</select>
+		
+		<select id="Reserv_ProductsList" resultMap="reservRes" parameterClass="int">
+			<include refid="reserv_select_all" />
+			where v_num = #v_num# ORDER BY q_date DESC
+		</select>
+
+
+	<insert id="reserv_insert" parameterClass="reserv">
+		insert into
+		admin_Reservation(r_no,q_date,
+		r_location,r_option,p_name,p_no,q_file_orgname,q_content,q_tell,v_num,r_ok)
+		values(admin_Reservation_no_seq.NEXTVAL,#q_date#,#r_location#,#r_option#,#p_name#,#p_no#,#q_file_orgname#,#q_content#,#q_tell#,window_no_seq.NEXTVAL,0)
+	</insert>
+
+
+	<update id="reserv_update" parameterClass="reserv">
+		update admin_Reservation set q_date = #q_date# , r_location = #r_location#,
+		r_option =#r_option#,
+		p_name=#p_name#,p_no=#p_no#,q_file_orgname=#q_file_orgname#,q_content=#q_content#,q_tell=#q_tell#
+		where r_no = #r_no#
+	</update>
+
+	<update id="reservOK_update" parameterClass="int">
+		update
+		admin_Reservation set r_ok = 1 where v_num = $v_num$
+	</update>
+
+	<delete id="reserv_delete" parameterClass="int">
+		delete admin_Reservation where r_no = $r_no$
+	</delete>
+	
+</sqlMap>
+
+

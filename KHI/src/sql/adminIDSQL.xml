@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+<sqlMap>
+	<typeAlias alias="id" type="admin_main.IdVO" />
+	<resultMap id="adminId" class="id">
+		<result property="id" column="id" />
+		<result property="password" column="password" />
+	</resultMap>
+
+
+	<select id="selectId" resultClass="int" parameterClass="id">
+		select
+		count(*) from ADMIN_ID where ID = #id# AND password=#password#
+	</select>
+
+
+</sqlMap>

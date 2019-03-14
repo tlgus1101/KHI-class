@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+<sqlMap  namespace="products">
+	<typeAlias alias="products" type="products.ProductsVO"/>
+		<resultMap id="productsRes" class="products" >
+			<result property="p_no" column="p_no"></result>
+			<result property="p_name" column="p_name"></result>
+			<result property="p_type" column="p_type"></result>
+			<result property="p_regDate" column="p_regDate"></result>
+			<result property="p_price" column="p_price"></result>
+			
+			<result property="p_org" column="p_org"></result>
+			<result property="p_mf" column="p_mf"></result>
+			<result property="p_frame" column="p_frame"></result>
+			<result property="p_sash" column="p_sash"></result>
+			<result property="p_detail" column="p_detail"></result>
+			
+			<result property="p_quan" column="p_quan"></result>
+			<result property="p_option" column="p_option"></result>
+			<result property="p_image" column="p_image"></result>
+			<result property="p_imagesv" column="p_imagesv"></result>
+		</resultMap>
+		
+		<!-- 중복내용 처리하는 명령어 -->
+		<sql id="p_select-all"> select * from products </sql>
+		<sql id="p_where-no">where p_no = #p_no#</sql>
+		
+		
+		<!-- 어드민 list가져오기 -->
+		<select id="p_selectAll" resultMap="productsRes">
+			<include refid="p_select-all" />
+			where p_option=1 or p_option=2
+			order by p_regDate DESC
+		</select>
+		
+		<!-- 정렬 내림/오름차순 list가져오기 -->
+		<select id="p_selectAllQuanDesc" resultMap="productsRes">
+			<include refid="p_select-all" />
+			where p_option=1 or p_option=2
+			order by p_quan DESC, p_regDate DESC
+		</select>
+		<select id="p_selectAllQuanAsc" resultMap="productsRes">
+			<include refid="p_select-all" />
+			where p_option=1 or p_option=2
+			order by p_quan ASC, p_regDate DESC
+		</select>
+		
+		<select id="p_selectAllOptionDesc" resultMap="productsRes">
+			<include refid="p_select-all" />
+			where p_option=1 or p_option=2
+			order by p_option DESC, p_regDate DESC
+		</select>
+		<select id="p_selectAllOptionAsc" resultMap="productsRes">
+			<include refid="p_select-all" />
+			where p_option=1 or p_option=2
+			order by p_option ASC, p_regDate DESC
+		</select>
+		
+		
+		<!-- 예약에서 쓸 list -->
+		<select id="p_selectOption1" resultMap="productsRes">
+			<include refid="p_select-all" />
+			where p_option=1
+			order by p_regDate DESC
+		</select>
+		
+		<!-- 카테고리 별 리스트 1. 외창 발코니 -->
+		<select id="p_selectOut" resultMap="productsRes">
+			<include refid="p_select-all" />
+			where (p_option=1 or p_option=2) and p_type=1
+			order by p_regDate DESC
+		</select>
+		<!-- 2. 내창 -->
+		<select id="p_selectIn" resultMap="productsRes">
+			<include refid="p_select-all" />
+			where (p_option=1 or p_option=2) and p_type=2
+			order by p_regDate DESC
+		</select>
+		<!-- 3. 악세서리 -->
+		<select id="p_selectAcc" resultMap="productsRes">
+			<include refid="p_select-all" />
+			where (p_option=1 or p_option=2) and p_type=3
+			order by p_regDate DESC
+		</select>
+		
+		<!-- 4. 판매종료 -->
+		<select id="p_finishSale" resultMap="productsRes">
+			<include refid="p_select-all" />
+			where p_option=0
+			order by p_regDate DESC
+		</select>
+		
+		
+		<!-- 하나의 제품만 선택해서 볼 것 -->
+		<select id="p_selectOne" resultMap="productsRes" parameterClass="products">
+			<include refid="p_select-all"/>
+			<include refid="p_where-no"/>
+		</select>
+		
+		<!-- 마지막 게시글! -->
+ 		<select id="p_selectLastNo" resultClass="products">
+			SELECT max(p_no) as p_no FROM PRODUCTS
+		</select>
+		
+		<!-- 삭제하기 -->
+		<delete id="p_deleteProducts" parameterClass="products">
+			delete from products where p_no = #p_no#
+		</delete>
+		
+		<!-- 등록하기 -->
+		<insert id="p_insertProducts" parameterClass="products">
+			insert into products (p_no, p_name, p_type, p_regDate, p_price, p_org, p_mf, p_frame, p_sash, p_detail, p_quan, p_option) 
+			values(products_p_no_seq.NEXTVAL, #p_name#, #p_type#, #p_regDate#, #p_price#, #p_org#, #p_mf#, #p_frame#, #p_sash#, #p_detail#, #p_quan#, #p_option#)
+		</insert>
+		
+		<!-- 수정하기 -->
+		<update id="p_updateProducts" parameterClass="products">
+			update products set p_name = #p_name#, p_type= #p_type#, 
+			p_price = #p_price#, p_org = #p_org#, p_mf = #p_mf#,
+			p_frame = #p_frame#, p_sash = #p_sash#, p_detail = #p_detail#,
+			p_quan = #p_quan#, p_option = #p_option#
+			<include refid="p_where-no" />
+		</update>
+
+
+		<!-- 파일 업로드하기 -->
+		<update id="p_updateImage" parameterClass="products">
+			UPDATE products SET p_image = #p_image#, p_imagesv = #p_imagesv#
+			<include refid="p_where-no" />
+		</update>
+			
+			
+			
+		<!-- 검색하기 -->
+		<select id="p_selectSearchName" resultMap="productsRes" parameterClass="String">
+			<include refid="p_select-all"/>
+			WHERE p_name like #searchKeyword# ORDER BY p_regDate DESC
+
+		</select>
+		<select id="p_selectSearchNo" resultMap="productsRes" parameterClass="String">
+			<include refid="p_select-all"/>
+			WHERE p_no like #searchKeyword#	ORDER BY p_regDate
+		</select>
+		
+		<!-- 수량감소 -->
+	<update id="de-quan">
+			<![CDATA[update products set p_quan = p_quan - $p_quan$  where p_name = #p_name# 	]]>
+	</update>
+
+	<!-- 재고없음 -->
+	<update id="p_quanZero" parameterClass="products">
+			<![CDATA[update products set p_option =  CASE WHEN p_quan <= 0 THEN 2 ELSE p_option END
+			where p_name = #p_name#	]]>
+	</update>
+	
+	<!-- 재고없음 어드민 -->
+	<update id="p_quanAdminZero" parameterClass="products">
+			UPDATE products SET p_option = #p_option#
+			<include refid="p_where-no" />
+	</update>
+		
+
+</sqlMap>

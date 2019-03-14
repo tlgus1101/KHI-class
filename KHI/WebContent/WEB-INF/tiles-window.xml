@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+	<definition name="hello" template="/main/main.jsp">
+		<put-attribute name="title" value="한길창호" />
+		<put-attribute name="header" value="/main/top.jsp" />
+		<put-attribute name="body" value="/reserv/calendar.jsp" />
+		<put-attribute name="footer" value="/main/footer.jsp" />
+	</definition>
+
+	<definition name="window" template="/main/main.jsp">
+		<put-attribute name="title" value="한길창호" />
+		<put-attribute name="header" value="/window/topList.jsp" />
+		<put-attribute name="body" value="/window/list.jsp" />
+		<put-attribute name="footer" value="/main/footer.jsp" />
+	</definition>
+
+	<definition name="window2" template="/main/main.jsp">
+		<put-attribute name="title" value="한길창호" />
+		<put-attribute name="header" value="/window/topList.jsp" />
+		<put-attribute name="body" value="/window/view.jsp" />
+		<put-attribute name="footer" value="/main/footer.jsp" />
+	</definition>
+
+	<definition template="/main/main.jsp" name="notice">
+		<put-attribute name="title" value="한길창호" />
+		<put-attribute name="header" value="/main/top2.jsp" />
+		<put-attribute name="body"
+			value="/notice/noticeList.jsp" />
+		<put-attribute name="footer" value="/main/footer.jsp" />
+	</definition>
+
+	<definition template="/main/main.jsp" name="noticeV">
+		<put-attribute name="title" value="한길창호" />
+		<put-attribute name="header" value="/main/top2.jsp" />
+		<put-attribute name="body"
+			value="/notice/noticeView.jsp" />
+		<put-attribute name="footer" value="/main/footer.jsp" />
+	</definition>
+
+	<definition name="admin" template="/admin/main.jsp">
+		<put-attribute name="title" value="한길창호" />
+		<put-attribute name="header" value="/admin/top.jsp" />
+		<put-attribute name="body"
+			value="/admin_main/admin_main.jsp" />
+	</definition>
+
+
+	<definition name="RESERVLIST" extends="admin">
+		<put-attribute name="body"
+			value="/admin_main/reserv/reservList.jsp" />
+	</definition>
+
+	<definition name="RESERVView" extends="admin">
+		<put-attribute name="body"
+			value="/admin_main/reserv/reservView.jsp" />
+	</definition>
+
+	<definition name="RESERVMOD" extends="admin">
+		<put-attribute name="body"
+			value="/admin_main/reserv/reservForm.jsp" />
+	</definition>
+	<!-- <definition name="QnA" extends="admin"> <put-attribute name="body" 
+		value="/admin/adQna.jsp" /> </definition> -->
+
+	<definition name="QnA" extends="admin">
+		<put-attribute name="body" value="/admin/adQnAUI.jsp" />
+	</definition>
+
+	<definition name="ADQnAWRITE" extends="admin">
+		<put-attribute name="body" value="/admin/adQMW.jsp" />
+	</definition>
+
+	<definition name="CUS" extends="admin">
+		<put-attribute name="body" value="/admin/adCusUI.jsp" />
+	</definition>
+
+	<definition name="ADCUSWRITE" extends="admin">
+		<put-attribute name="body" value="/admin/adCMW.jsp" />
+	</definition>
+
+	<definition name="PRODUCTS" extends="admin">
+		<put-attribute name="body"
+			value="/products/admin/p_adminList.jsp" />
+	</definition>
+
+	<definition name="PRODUCTSWRITE" extends="admin">
+		<put-attribute name="body"
+			value="/products/admin/p_adminWrite.jsp" />
+	</definition>
+
+	<definition name="PRODUCTSView" extends="admin">
+		<put-attribute name="body"
+			value="/products/admin/p_adminView.jsp" />
+	</definition>
+
+	<definition name="FINISHPRODUCTS" extends="admin">
+		<put-attribute name="body"
+			value="/products/admin/p_adminFinishSale.jsp" />
+	</definition>
+
+	<definition name="NOTICE" extends="admin">
+		<put-attribute name="body"
+			value="/noticeAdmin/noticeList.jsp" />
+	</definition>
+
+	<definition name="NOTICEWRITE" extends="admin">
+		<put-attribute name="body"
+			value="/noticeAdmin/noticeWrite.jsp" />
+	</definition>
+
+	<definition name="NOTICEView" extends="admin">
+		<put-attribute name="body"
+			value="/noticeAdmin/noticeView.jsp" />
+	</definition>
+
+	<definition name="WINDOW" extends="admin">
+		<put-attribute name="body" value="/admin/adminlist.jsp" />
+	</definition>
+
+	<definition name="WINDOW2" extends="admin">
+		<put-attribute name="body" value="/admin/adminview.jsp" />
+	</definition>
+
+	<definition name="WINDOWWRITE" extends="admin">
+		<put-attribute name="body" value="/window/write.jsp" />
+	</definition>
+
+
+	<definition name="QNAView" extends="admin">
+		<put-attribute name="body" value="/admin/adQview.jsp" />
+	</definition>
+
+	<definition name="product" extends="hello">
+		<put-attribute name="header"
+			value="/products/top_products.jsp" />
+		<put-attribute name="body"
+			value="/products/products_list_bal.jsp" />
+	</definition>
+
+	<definition name="product2" extends="hello">
+		<put-attribute name="header"
+			value="/products/top_products2.jsp" />
+		<put-attribute name="body"
+			value="/products/products_list_my.jsp" />
+	</definition>
+
+	<definition name="product3" extends="hello">
+		<put-attribute name="header"
+			value="/products/top_products3.jsp" />
+		<put-attribute name="body"
+			value="/products/products_list_acc.jsp" />
+	</definition>
+
+	<definition name="productView" extends="hello">
+		<put-attribute name="header"
+			value="/products/top_products.jsp" />
+		<put-attribute name="body"
+			value="/products/products_view.jsp" />
+	</definition>
+
+	<definition name="productView2" extends="hello">
+		<put-attribute name="header"
+			value="/products/top_products2.jsp" />
+		<put-attribute name="body"
+			value="/products/products_view2.jsp" />
+	</definition>
+
+	<definition name="productView3" extends="hello">
+		<put-attribute name="header"
+			value="/products/top_products3.jsp" />
+		<put-attribute name="body"
+			value="/products/products_view3.jsp" />
+	</definition>
+
+	
+	<definition name="QnAlist" extends="hello">
+		<put-attribute name="header" value="/QnA/QnAtop.jsp" />
+		<put-attribute name="body" value="/QnA/listUI.jsp" />
+	</definition>
+	
+	<definition name="QNAView" extends="admin">
+		<put-attribute name="body" value="/admin/adQview.jsp" />
+	</definition>
+	
+	<definition name="CUSlist" extends="hello">
+		<put-attribute name="header" value="/CUS/CUStop.jsp" />
+		<put-attribute name="body" value="/CUS/listUI.jsp" />
+	</definition>
+	
+	<definition name="CUSView" extends="admin">
+		<put-attribute name="body" value="/admin/adCview.jsp" />
+	</definition>
+	
+	<definition name="QnAview" extends="hello">
+		<put-attribute name="header" value="/QnA/QnAtop.jsp" />
+		<put-attribute name="body" value="/QnA/viewUI.jsp" />
+	</definition>
+	
+	<definition name="QviewCheck" extends="hello">
+		<put-attribute name="header" value="/QnA/QnAtop.jsp" />
+		<put-attribute name="body" value="/QnA/checkview.jsp" />
+	</definition>
+	
+	<definition name="CviewCheck" extends="hello">
+		<put-attribute name="header" value="/CUS/CUStop.jsp" />
+		<put-attribute name="body" value="/QnA/checkviewForm.jsp" />
+	</definition>
+	
+	<definition name="CUSview" extends="hello">
+		<put-attribute name="header" value="/CUS/CUStop.jsp" />
+		<put-attribute name="body" value="/CUS/viewUI.jsp" />
+	</definition>
+	
+	<definition name="QnAwrite" extends="hello">
+		<put-attribute name="header" value="/QnA/QnAtop.jsp" />
+		<put-attribute name="body" value="/QnA/writeUI.jsp" />
+	</definition>
+	
+	<definition name="CUSwrite" extends="hello">
+		<put-attribute name="header" value="/CUS/CUStop.jsp" />
+		<put-attribute name="body" value="/CUS/writeUI.jsp" />
+	</definition>
+	
+	<definition name="Searchlist" extends="hello">
+		<put-attribute name="header" value="/QnA/searchTOP.jsp" />
+		<put-attribute name="body" value="/QnA/searchUI.jsp" />
+	</definition>
+
+</tiles-definitions>	

@@ -1,0 +1,149 @@
+@charset "utf-8";
+/* *******************************************************
+ * filename : main.css
+ * description : 메인 레이아웃 및 컨텐츠 CSS
+ * date : 2017-05-30
+******************************************************** */
+
+/* ******************  메인 비주얼 ********************** */
+#mainContainer { background-color:#fff; overflow:hidden; min-height:1000px; }
+/* MAIN :: VISUAL */
+#mainVisual { width:100%; height:623px; margin:0 auto; background-color:#f7f5fa; color:#564183; position:relative; text-align:center;}
+#mainVisual .slick-track,
+#mainVisual .slick-list {
+	-webkit-perspective: 2000;
+	-webkit-backface-visibility: hidden;
+}
+#mainVisual .main-visual,
+#mainVisual .main-visual-inner, 
+#mainVisual .slick-list,  
+#mainVisual .slick-track, 
+.main-visual-item{
+	height:100%;
+}
+.main-visual-inner{position:absolute !important; left:0 !important;}
+/* 메인비주얼 텍스트 */
+.main-visual-txt {position:absolute; width:100%; z-index:10; top: 200px; left:0; text-align:center;}
+.main-visual-txt p{position:relative;top:-30px; z-index:10; opacity:0;filter:Alpha(opacity=0); -webkit-transition: all 0.5s; -moz-transition: all 0.5s; -ms-transition: all 0.5s; -o-transition: all 0.5s;transition: all 0.5s; }
+.main-visual-txt p.visual-txt2{padding:19px 0 31px; -webkit-transition-delay: 0.5s; -moz-transition-delay: 0.5s; -ms-transition-delay: 0.5s; -o-transition-delay: 0.5s; transition-delay: 0.5s;}
+.main-visual-txt p.visual-txt3{-webkit-transition-delay: 1s; -moz-transition-delay:1s; -ms-transition-delay: 1s; -o-transition-delay: 1s; transition-delay: 1s;}
+.main-visual-txt.active p{top:0; opacity:1;filter:Alpha(opacity=100);}
+
+/* 메인비주얼 dot */
+.main-visual .slick-dots {position:relative; z-index:9; left:0; bottom:40px; display:inline-block;}
+.main-visual .slick-dots li {float:left; margin-left: 7px;}
+.main-visual .slick-dots button {border:0; font-size:0; cursor:pointer; width:8px; height:8px; border:1px solid #fff; -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px;}
+.main-visual .slick-dots .slick-active button {background-color:#fff;}
+
+
+/* 메인비주얼 화살표 */
+.main-visual .slick-arrow {position:absolute; font-size:0; border:0; cursor:pointer; top:50%; z-index:11; margin-top:-31px;}
+.main-visual .slick-prev {left:65px;}
+.main-visual .slick-next {right:65px}
+
+
+/* ******************  메인컨텐츠 :: 상단 ********************** */
+/* -------- 메인상단 :: 실시간상담현황 -------- */
+.main-top-content{padding-top:50px;}
+.realtime-consult-state-con{float:left; width:471px; height:280px; letter-spacing:-0.75px;}
+.realtime-consult-state-con .inner{border:3px solid #cdd2da;}
+.realtime-consult-state-con .realtime-consult-tit{height:60px; color:#434343; font-size:23px; font-weight:400; padding:0 35px; line-height:60px; border-bottom:1px solid #e4e4e4;}
+.consult-state-list-box{overflow:hidden; height:176px; padding:18px 35px; }
+.consult-state-list-box ul li{position:relative; overflow:hidden; height:27px; line-height:23px; padding:5px 120px 5px 0; border:0 !important; }
+.consult-state-list-box ul li .consult-writer{float:left; width:92px; color:#2772c7; font-size:17px;}
+.consult-state-list-box ul li .consult-writer i{color:#999;}
+.consult-state-list-box ul li .consult-tit{float:left; width:180px; font-size:17px;  color:#474747;}
+.consult-state-list-box ul li .consult-state{position:absolute; top:4px; right:4px; }
+/* -------- 메인상단 :: 캘린더 -------- */
+.main-calendar-content{float:left; width:729px}
+.calendar-left-con{float:left; width:415px; height:280px; background:url(/images/main/main_calendar_left_con_bg.jpg) no-repeat}
+.calendar-right-con{float:left; width:350px; height:350px; background:url(/images/main/main_calendar_right_con_bg.jpg) no-repeat}
+/* 주요일정 :: 상단 */
+.calendar-top-con{position:relative; height:57px;}
+.calendar-top-con .current-month{text-align:center; font-size:23px; letter-spacing:-0.7px; line-height:57px; color:#fff;font-weight:600; }
+.calendar-top-con .current-month strong{}
+.calendar-top-con a{position:absolute; top:0;  }
+.calendar-top-con a i{color:#000; font-size:34px;}
+.calendar-top-con .prev-month-btn{left:4px; }
+.calendar-top-con .next-month-btn{right:0; }
+/* 주요일정 :: 캘린더 */
+.calendar-content .calendar-tbl{width:100%; table-layout: fixed }
+.calendar-content .calendar-tbl th, .calendar-content .calendar-tbl td{border-right:1px solid #ddd; border-bottom:1px solid #ddd;}
+.calendar-content .calendar-tbl th{height:36px; background-color:#f5f5f5; color:#444; font-size:15px; letter-spacing:-0.5px; font-weight:600; text-align:center;;}
+.calendar-content .calendar-tbl td{position:relative; height:24px; padding:6px 5px;vertical-align:top; }
+.calendar-content .calendar-tbl th:first-child, .calendar-content .calendar-tbl td:first-child{border-left:1px solid #ddd;}
+.calendar-content .calendar-tbl td.has-schedule{position:relative; cursor:pointer; background-color:#d6eae0}
+.calendar-content .calendar-tbl td .date{display:block; color:#444; font-size:12px; letter-spacing:-0.5px; font-weight:600;}
+.calendar-content .calendar-tbl .sunday{color:#df0000 !important;}
+.calendar-content .calendar-tbl .saturday{color:#0082dd !important;}
+.calendar-content .calendar-tbl td .date.none-day{color:#d2d2d2;}
+.calendar-content .calendar-tbl td .date-schedule-num{position:absolute; bottom:2px; left:2px; font-size:11px; letter-spacing:-0.75px; color:#838383; font-family:"돋움", dotum,'NanumSquare',"나눔고딕", NanumGothic, "Nanum Gothic","돋움", Dotum, Arial, sans-serif;}
+.calendar-content .calendar-tbl td .today:after {display:block; content:""; position:absolute; top:-1px; left:-1px; bottom:-1px; right:-1px; height:34px; border:2px solid #418be5}
+.calendar-content .calendar-tbl td .today + .date-schedule-num{color:#418be5}
+.calendar-content .calendar-tbl td .date-schedule-num i{font-size:14px; vertical-align:middle; margin-top:-2px;}
+/* 주요일정 :: 상세보기 *//* 
+.calendar-today-state{text-align:center; color:#fff; font-size:23px; padding:28px 0 20px; letter-spacing:-1px; }
+.calendar-today-state strong b{font-size:45px; font-weight:900}
+.calendar-today-list-con{display:table; width:300px; height:300px}
+.calendar-today-list-con ul{display:table-cell; padding:0 25px; height:100%; vertical-align:middle;}
+.calendar-today-list-con ul li{color:#fff; letter-spacing:-0.75px; font-size:17px; padding:5px 0;}
+.calendar-today-list-con ul li a{display:block; color:#fff;}
+.calendar-today-list-con ul li span{display:inline-block; vertical-align:middle; max-width:195px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.calendar-today-list-con ul li i{color:#c7c7c7; font-size:20px; margin-top:-2px;}
+.calendar-today-list-con ul li strong{display:inline-block; vertical-align:middle; width:65px; color:#b8d9ff; font-weight:400; margin-left:5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+	 */	
+/* ******************  메인컨텐츠 :: 시공현장 ********************** */		
+.main-product-list-con{padding:63px 0;}
+.main-prd-tit, .main-prd-sub-tit{text-align:center; color:#333; font-size:32px; font-weight:400;}
+.main-prd-sub-tit{font-size:18px; color:#6c6c6c; letter-spacing:-0.5px; padding:25px 0 50px;} 
+.product-list-box{margin:0 -10px;}
+.product-list-box .prd-item{float:left; width:223px; margin:0 10px 20px 10px;}
+.product-list-box .prd-item a{display:block; border:1px solid #dadada;  -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -ms-transition: all 0.3s; -o-transition: all 0.3s; transition: all 0.3s;}
+.product-list-box .prd-item .prd-thumb{overflow:hidden; position:relative; display:block; padding-top:159%; height:0; }
+.product-list-box .prd-item .prd-thumb img{position:absolute; top:0px; left:0px; width:100%; height:100%;}
+.product-list-box .prd-item .prd-thumb .prd-detail-btn{position:absolute; bottom:-50px; left:37px; width:148px; height:42px; line-height:42px; color:#fff; font-size:17px; letter-spacing:-0.75px; text-align:center; background-color:rgba(0,0,0,0.65); font-weight:600; opacity:0;filter:Alpha(opacity=0); -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -ms-transition: all 0.3s; -o-transition: all 0.3s; transition: all 0.3s;}
+.product-list-box .prd-item .prd-thumb .prd-detail-btn i{font-size:20px; margin-left:5px; margin-top:-2px;}
+.product-list-box .prd-item .prd-info-con{text-align:center; padding:20px; border-top:1px solid #dadada;}
+.product-list-box .prd-item .prd-info-con strong, .product-list-box .prd-item .prd-info-con span{display:block;}
+.product-list-box .prd-item .prd-info-con .prd-name{display:block; color:#333; font-size:18px; letter-spacing:-0.75px; margin-bottom:10px;}
+.product-list-box .prd-item .prd-info-con .prd-day{color:#6c6c6c; font-size:15px; letter-spacing:-0.25px; font-weight:bold} 
+.product-list-box .prd-item .prd-info-con .prd-day:after{display:block; content:""; width:22px; height:1px; background-color:#333; margin:15px auto }
+.product-list-box .prd-item .prd-info-con .prd-txt{color:#444; font-size:17px; letter-spacing:-0.75px;}
+.product-list-box .prd-item .prd-info-con .prd-txt b{color:#d9003d;}
+.product-list-box .slick-arrow {position:absolute; font-size:0; border:0; cursor:pointer; top:50%; z-index:9; width:66px; height:66px; margin-top:-33px;}
+.product-list-box .slick-prev {left:-65px; background:url(/images/button/main_prd_prev_btn.gif) no-repeat}
+.product-list-box .slick-next {right:-65px;  background:url(/images/button/main_prd_next_btn.gif) no-repeat}
+.product-list-box .prd-item a:hover{border-color:#202020}
+.product-list-box .prd-item a:hover .prd-thumb .prd-detail-btn{bottom:0px; opacity:1.0;filter:Alpha(opacity=100);}
+
+/* ******************  메인컨텐츠 :: 메인배너 ********************** */
+.main-banner {position:relative; padding-bottom: 64px; }
+.main-banner:after{content:""; display:block; width:451px; height:221px; position:absolute; bottom:0px; left:50%; margin-left:448px;  background:url(/images/main/main_quick_banner_bg.jpg) no-repeat }
+.main-banner ul{position:relative; z-index:1;}
+.main-banner ul li {float:left; width:390px; height:228px; margin-left: 14px;}
+.main-banner ul li:first-child {margin-left: 0;}
+.main-banner ul li a {position:relative; display:block; padding:40px 40px;}
+.main-banner ul li a h3 {font-size:26px; letter-spacing: -0.5px; color:#fff; font-weight: 400; margin-bottom:50px;}
+.main-banner ul li a p {font-size:17px; line-height: 24px; letter-spacing: -0.7px; color:#fff; opacity:0.8;filter:Alpha(opacity=80);}
+.main-banner ul li a img {position:absolute; z-index:10; top:40px; right:35px; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -ms-transition: all 0.3s; -o-transition: all 0.3s; transition: all 0.3s;}
+.main-banner ul li:hover a img {transform:rotate(90deg);  -moz-transform:rotate(90deg);  }
+
+/* ******************  메인컨텐츠 :: 견적 확인하기 ********************** */
+.main-inquiry-con{width:100%; height:692px; background:#eceef2 url(/images/main/main_inquiry_bg.jpg) no-repeat 50% 0;}
+.main-inquiry-inner-con{padding:63px 0;} 
+.main-inquiry-tit-box{text-align:center; letter-spacing:-0.7px; margin-bottom:65px;}
+.main-inquiry-tit-box h3{font-size:32px; color:#333; font-weight:400;}
+.main-inquiry-tit-box p{font-size:18px; color:#484848;}
+.main-inquiry-container{width:1040px; margin:0px auto;}
+.main-inquiry-tbl{width:100%; letter-spacing:-0.75px;}
+.main-inquiry-tbl th, .main-inquiry-tbl td{padding:15px 45px}
+.main-inquiry-tbl th{width:120px; color:#3d3d3d; font-size:19px; font-weight:600; text-align:left; padding-right:0; }
+.main-inquiry-tbl th.line{border-left:1px solid #bfc0c2}
+.main-inquiry-tbl td input{width:100%; height:25px; background:none;  border:0; border-bottom:3px solid #929292; color:#3d3d3d; font-size:17px}
+.main-inquiry-btn-controls{text-align:center; padding-top:70px;}
+.inquiry-btn{width:305px; height:68px; color:#fff; background-color:#0e3988; font-size:20px; font-weight:600;}
+
+
+.main-inquiry-con .person-check {float:right;}
+.main-inquiry-con .person-check p {text-align:right; padding-right:40px; font-size:14px;}
+.main-inquiry-con .person-check p > a {text-decoration:underline; color:#333; font-weight:bold;}

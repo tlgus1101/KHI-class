@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+
+<sqlMap>
+
+   <typeAlias alias="window" type="window.windowVO" />
+   
+   <resultMap id="windowRes" class="window">
+   <result property="v_num" column="v_num"/>
+      <result property="v_location" column="v_location"/>
+      <result property="v_content" column="v_content"/>
+      <result property="v_option" column="v_option"/>
+      <result property="v_image" column="v_image"/>
+       <result property="v_date" column="v_date"/>
+      <result property="v_read" column="v_read"/>
+      <result property="v_imagesv" column="v_imagesv"/>
+   </resultMap>
+   
+			<sql id="winselect-all"> <!-- 전체-->
+			SELECT * FROM WINDOW_VIEW</sql>	
+			
+			<sql id="winwhere-no"> <!-- 글번호 -->
+			WHERE v_num = #v_num#</sql>
+			
+			<select id="windowALL" resultMap="windowRes">
+				<include refid="winselect-all"/>
+				ORDER BY v_NUM DESC
+			</select>
+			
+		
+		<select id="windowOne" resultMap="windowRes" parameterClass="int"> <!-- 변수 타입 -->
+			<include refid="winselect-all"/> 
+			<include refid="winwhere-no"/>
+		</select>
+		
+			<select id="windowLastNo" resultClass="window"> <!-- map이 아니라 클래스 하나만 채워줌. int 사용가능 -->
+			SELECT max(v_num) as v_num FROM WINDOW_VIEW 
+		</select>
+		
+		<select id="windowSearchA" parameterClass="string" resultMap="windowRes"> <!-- 장소로 검색 -->
+		<include refid="winselect-all"/>
+		WHERE v_location like #searchKeyword# ORDER BY v_num DESC 
+		</select>
+		
+		<select id="windowSearchB" parameterClass="string" resultMap="windowRes">
+		<include refid="winselect-all"/>
+		WHERE v_content like #searchKeyword# ORDER BY v_num DESC <!-- $로 묶어서 값을 전송할 수 있다.(칼럼을) 알고만 있어라 -->
+		</select>
+		
+	<insert id="insertWindow" parameterClass="window">
+		INSERT INTO WINDOW_VIEW(v_num, v_location, v_content, v_option, v_date)
+		VALUES (WINDOW_NO_SEQ.NEXTVAL, #v_location#, #v_content#, #v_option#, #v_date#)
+		</insert>
+		
+		<insert id="insertWindow2" parameterClass="window">
+		INSERT INTO WINDOW_VIEW(v_num, v_location, v_content, v_option, v_date)
+		VALUES (#v_num#, #v_location#, #v_content#, #v_option#, #v_date#)
+		</insert>
+		
+		
+		<update id="updateWindow" parameterClass="window">
+		UPDATE WINDOW_VIEW SET v_location = #v_location#,
+				v_content = #v_content#,
+				v_option = #v_option#
+		<include refid="winwhere-no"/>		
+		</update>
+		
+	<update id="updateImageFile" parameterClass="window">
+	UPDATE WINDOW_VIEW SET v_image = #v_image#, v_imagesv = #v_imagesv#
+	 <include refid="winwhere-no"/>
+	 </update>
+		
+		<update id="ReadWindow" parameterClass="window">
+			UPDATE WINDOW_VIEW SET v_read = v_read + 1
+			<include refid="winwhere-no"/>
+		</update>
+		
+			<delete id="deleteWindow" parameterClass="window">
+			DELETE FROM WINDOW_VIEW
+			<include refid="winwhere-no"/>
+		</delete>
+	
+	</sqlMap>

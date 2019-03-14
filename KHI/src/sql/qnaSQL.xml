@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC '-//ibatis.apache.org//DTD Sql Map 2.0//EN' 'http://ibatis.apache.org/dtd/sql-map-2.dtd'>
+
+<sqlMap namespace="yh">
+
+	<typeAlias type="qna.qnaVO" alias="qna" />
+
+	<resultMap class="qna" id="qnaRes">
+		<result column="q_num" property="q_num" />
+		<result column="q_option" property="q_option" />
+		<result column="q_subject" property="q_subject" />
+		<result column="q_name" property="q_name" />
+		<result column="q_phone1" property="q_phone1" />
+		<result column="q_phone2" property="q_phone2" />
+		<result column="q_email" property="q_email" />
+		<result column="q_password" property="q_password" />
+		<result column="q_date" property="q_date" />
+		<result column="q_content" property="q_content" />
+		<result column="file_orgname" property="file_orgname" />
+		<result column="file_savname" property="file_savname" />
+		<result column="regdate" property="regdate" />
+		<result column="ref" property="ref" />
+		<result column="re_step" property="re_step" />
+		<result column="checkre" property="checkre" />
+	</resultMap>
+
+	<sql id="select-all">SELECT * FROM QnA </sql>
+
+	<sql id="where-num"> WHERE q_num = #q_num# </sql>
+
+	<select id="QnAlist" parameterClass="int" resultMap="qnaRes">
+		<include refid="select-all" />
+		WHERE q_option = 1 ORDER BY ref DESC, re_step ASC
+	</select>
+
+	<select id="Cuslist" parameterClass="int" resultMap="qnaRes">
+		<include refid="select-all" />
+		WHERE q_option = 2 ORDER BY ref DESC, re_step ASC
+	</select>
+
+	<select id="selectQMOM" parameterClass="int" resultMap="qnaRes">
+		<include refid="select-all" />
+		WHERE re_step = 0 AND q_option = 1
+		ORDER BY q_num DESC
+	</select>
+
+	<select id="selectCMOM" parameterClass="int" resultMap="qnaRes">
+		<include refid="select-all" />
+		WHERE re_step = 0 AND q_option = 2
+		ORDER BY q_num DESC
+	</select>
+
+	<select id="selectOne" parameterClass="int" resultMap="qnaRes">
+		<include refid="select-all" />
+		<include refid="where-num" />
+	</select>
+
+	<select id="searchlist" parameterClass="qna" resultMap="qnaRes">
+		<include refid="select-all" />
+		WHERE q_name = #q_name# ORDER BY q_num DESC
+	</select>
+
+	<select id="selectLastNo" parameterClass="int" resultClass="qna">SELECT
+		max(q_num) as q_num FROM QnA
+	</select>
+
+	<select id="selectPassword" resultMap="qnaRes">
+		<include refid="select-all" />
+		<include refid="where-num" />
+		AND q_password = #q_password#
+	</select>
+
+	<insert id="insertQnA" parameterClass="qna">insert into QnA(q_num,
+		q_option, q_subject, q_name, q_phone1, q_phone2, q_email, q_password,
+		q_content, regdate, ref, re_step, checkre)
+		values (Q_NUM_SEQ.NEXTVAL,
+		1, #q_subject#, #q_name#, #q_phone1#,
+		#q_phone2#, #q_email#,
+		#q_password#, #q_content#, #regdate#,
+		Q_NUM_SEQ.CURRVAL,
+		#re_step#, #checkre#)
+	</insert>
+
+	<insert id="insertQnAReply" parameterClass="qna">insert into
+		QnA(q_num, q_option, q_subject, q_name, q_phone1, q_phone2, q_email,
+		q_password, q_content, regdate, ref, re_step, checkre)
+		values
+		(Q_NUM_SEQ.NEXTVAL, 1, #q_subject#, #q_name#, #q_phone1#,
+		#q_phone2#,
+		#q_email#, #q_password#, #q_content#, #regdate#,
+		#ref#,
+		#re_step#, #checkre#)
+	</insert>
+
+	<insert id="insertCUS" parameterClass="qna">insert into QnA(q_num,
+		q_option, q_subject, q_name, q_phone1, q_phone2, q_email, q_password,
+		q_date, q_content, regdate, ref, re_step, checkre)
+		values
+		(Q_NUM_SEQ.NEXTVAL,
+		2, #q_subject#, #q_name#, #q_phone1#,
+		#q_phone2#,
+		#q_email#,
+		#q_password#, #q_date#, #q_content#, #regdate#,
+		Q_NUM_SEQ.CURRVAL,
+		#re_step#, #checkre#)
+	</insert>
+
+	<insert id="insertCUSReply" parameterClass="qna">insert into
+		QnA(q_num, q_option, q_subject, q_name, q_phone1, q_phone2, q_email,
+		q_password, q_date, q_content, regdate, ref, re_step, checkre)
+		values
+		(Q_NUM_SEQ.NEXTVAL, 2, #q_subject#, #q_name#, #q_phone1#,
+		#q_phone2#,
+		#q_email#, #q_password#, #q_date#, #q_content#, #regdate#,
+		#ref#,
+		#re_step#, #checkre#)
+	</insert>
+
+	<update id="updateQnA" parameterClass="qna">
+		UPDATE QnA SET q_subject = #q_subject#, q_name = #q_name#, q_email =
+		#q_email#, q_content = #q_content#
+		<include refid="where-num" />
+	</update>
+
+	<update id="updateCUS" parameterClass="qna">
+		UPDATE QnA SET q_subject = #q_subject#, q_name = #q_name#, q_phone1 =
+		#q_phone1#, q_phone2 = #q_phone2#, q_password =#q_password#, q_email = #q_email#, q_date =
+		#q_date#, q_content = #q_content#
+		<include refid="where-num" />
+	</update>
+
+	<update id="updateFile" parameterClass="qna">
+		UPDATE QnA SET FILE_ORGNAME = #file_orgname#,FILE_SAVNAME =
+		#file_savname#
+		<include refid="where-num" />
+	</update>
+
+	<update id="updateReplyStep" parameterClass="qna">UPDATE QnA SET
+		re_step=re_step+1 WHERE ref=#ref# AND re_step>#re_step#
+	</update>
+	
+	<update id="updateStep" parameterClass="qna">UPDATE QnA SET
+		checkre=checkre+1 WHERE ref=#ref# AND checkre>#checkre#
+	</update>
+
+	<delete id="deleteQnA" parameterClass="qna">
+		DELETE FROM QnA
+		<include refid="where-num" />
+	</delete>
+
+</sqlMap>

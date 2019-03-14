@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+	<constant name="struts.multipart.maxSize" value="104857600" />
+
+	<package name="reserv" extends="struts-default,tiles-default">
+
+		<!-- 게스트 메인 액션 -->
+		<action name="CalendarAction" class="reserv.CalendarAction">
+			<!-- <result>/reserv/calendar.jsp</result> -->
+			<result>/main/hello.jsp</result>
+			<!-- <result type="chain">CalendarListAction</result> -->
+		</action>
+
+		<!-- <action name="CalendarAction_2" class="reserv.CalendarAction"> <result>/reserv/calendar.jsp</result> 
+			<result>/reserv/calendar.jsp</result> <result type="chain">CalendarListAction</result> 
+			</action> <action name="CalendarListAction" class="reserv.CalendarAction" 
+			method="DayList"> <result type="tiles">calendarList</result> <result>/main/hello.jsp</result><result 
+			type="tiles">calendarList</result> <result >/main/hello.jsp</result> <result 
+			type="tiles">calendarList</result> <result type="chain">CalendarAction</result> 
+			</action> -->
+
+
+		<!-- <action name="AdminMainAction"> <result>CalendarAction</result> <result>CalendarListAction</result> 
+			<result>/main/hello.jsp</result> </action> -->
+
+		<!-- 어드민 메인 액션 -->
+
+		<action name="Admin_login" class="admin_main.AdminMainAction">
+			<result>/admin_main/admin_login.jsp</result>
+		</action>
+
+		<action name="AdminMainAction"
+			class="admin_main.AdminMainAction">
+			<result>/tiles/admin.jsp</result>
+		</action>
+
+		<action name="Admin_main" class="admin_main.AdminMainAction"
+			method="login">
+			<result type="chain">AdminMainAction</result>
+		</action>
+
+		<action name="AdminReservView"
+			class="reserv.admin.reservViewAction" method="reservView">
+			<result type="tiles">RESERVView</result>
+		</action>
+		<!-- 예약 액션 -->
+
+		<action name="ReservModifyAction"
+			class="reserv.ReservFormAction" method="ReservModify">
+			<result type="tiles">RESERVMOD</result>
+		</action>
+
+		<action name="ReservUpdateAction"
+			class="reserv.ReservFormAction" method="ReservUpdate">
+			<result type="chain">AdminReservView</result>
+		</action>
+
+		<action name="ReservDeleteOkAction"
+			class="reserv.ReservFormAction" method="ReservDelete">
+			<result type="chain">ReservListction</result>
+		</action>
+
+		<action name="ReservDeleteAction"
+			class="reserv.ReservFormAction" method="ReservDelete">
+			<result type="chain">AdminMainAction</result>
+		</action>
+
+		<action name="ReservFormAction" class="reserv.ReservFormAction">
+			<result>/admin_main/reserv/reservForm.jsp</result>
+		</action>
+
+		<action name="ReservAction" class="reserv.ReservFormAction"
+			method="ReservSave">
+			<result type="chain">ReservFormAction</result>
+		</action>
+
+		<action name="ReservListction"
+			class="admin_main.AdminMainAction" method="ReservList">
+			<result type="tiles">RESERVLIST</result>
+		</action>
+
+		<action name="ReservActionToList"
+			class="reserv.ReservFormAction" method="ReservSave">
+			<result type="chain">ReservFormAction</result>
+		</action>
+		<!-- window struts -->
+
+		<!-- 메인 -->
+
+		<action name="winListAction" class="window.winListAction">
+			<result>/window/window.jsp</result>
+		</action>
+		<!-- 관리자 -->
+
+		<action name="adminList" class="window.adminListAction">
+			<!-- <result>/admin/adminlist.jsp</result> -->
+			<result type="tiles">WINDOW</result>
+		</action>
+		<!-- 글쓰기는 관리자 -->
+
+		<action name="writeForm" class="window.winWriteAction"
+			method="form">
+			<result type="tiles">WINDOWWRITE</result>
+		</action>
+
+		<action name="winWriteAction" class="window.winWriteAction">
+			<!-- 메소드 정의 없으니 execute메소드 가동 -->
+
+			<result type="redirect-action">
+				<param name="actionName">adminList</param>
+			</result>
+		</action>
+		<!-- 메인 -->
+
+		<action name="winViewAction" class="window.winViewAction">
+			<result>/window/window2.jsp</result>
+		</action>
+		<!-- 관리자 -->
+
+		<action name="adminView" class="window.adminViewAction">
+			<result type="tiles">WINDOW2</result>
+		</action>
+
+		<action name="modifyForm" class="window.winViewAction">
+			<!-- 뷰액션안에 다 있음 -->
+			<result type="chain">writeForm</result>
+			<!-- 체인으로 라이트폼으로 이동 -->
+		</action>
+
+		<action name="winModify" class="window.winModifyAction">
+			<result type="chain">adminView</result>
+		</action>
+
+		<action name="winDelete" class="window.windeleteAction">
+			<result type="chain">adminList</result>
+		</action>
+	</package>
+
+
+	<package name="products" extends="struts-default,tiles-default"
+		namespace="/products">
+		<!-- admin 제품 목록/상세보기 -->
+
+		<action name="p_adminList" class="products.admin.listAction">
+			<!-- <result>/products/admin/p_adminList.jsp</result> -->
+			<result type="tiles">PRODUCTS</result>
+		</action>
+		<!-- admin 판매종료된 목록보기 -->
+
+		<action name="p_adminFinishSale"
+			class="products.admin.listAction" method="finishSale">
+			<!-- <result>/products/admin/p_adminList.jsp</result> -->
+			<result type="tiles">FINISHPRODUCTS</result>
+		</action>
+
+		<action name="p_adminView" class="products.admin.viewAction">
+			<result type="tiles">PRODUCTSView</result>
+		</action>
+		<!-- 제품 등록하기 -->
+
+		<action name="p_writeForm" class="products.admin.writeAction"
+			method="form">
+			<result type="tiles">PRODUCTSWRITE</result>
+		</action>
+
+		<action name="p_adminWrite" class="products.admin.writeAction">
+
+			<result type="redirect-action">
+				<param name="actionName">p_adminList</param>
+			</result>
+		</action>
+		<!-- 수정하기 -->
+
+		<action name="p_modifyForm" class="products.admin.viewAction">
+			<result type="chain">p_writeForm</result>
+		</action>
+
+		<action name="p_adminModify"
+			class="products.admin.modifyAction">
+			<result type="chain">p_adminView</result>
+		</action>
+
+		<action name="p_adminDelete"
+			class="products.admin.deleteAction">
+			<result type="chain">p_adminList</result>
+		</action>
+		<!-- 제품 목록보기 -->
+
+		<action name="products_list_bal" class="products.ListAction">
+			<result type="tiles">product</result>
+		</action>
+
+		<action name="products_list_my" class="products.ListAction"
+			method="listIn">
+			<result type="tiles">product2</result>
+		</action>
+
+		<action name="products_list_acc" class="products.ListAction"
+			method="listAcc">
+			<result type="tiles">product3</result>
+		</action>
+		<!-- 제품 상세보기 -->
+
+		<action name="products_view_bal" class="products.ViewAction">
+			<result type="tiles">productView</result>
+		</action>
+
+		<action name="products_view_my" class="products.ViewAction">
+			<result type="tiles">productView2</result>
+		</action>
+
+		<action name="products_view_acc" class="products.ViewAction">
+			<result type="tiles">productView3</result>
+		</action>
+	</package>
+	<!-- QnA -->
+
+	
+	<!-- QnA -->
+
+	
+	<package name="qna" extends="struts-default,tiles-default"
+		namespace="/yh">
+		
+		<action name="QnAlistAction" class="qna.QnAlistAction">
+			<result type="tiles">QnAlist</result>
+		</action>
+		
+		<action name="CUSlistAction" class="cus.CUSlistAction">
+			<result type="tiles">CUSlist</result>
+		</action>
+		
+		<action name="QnAwriteForm" class="qna.QnAwriteAction"
+			method="QnAform">
+			<result type="tiles">QnAwrite</result>
+		</action>
+		
+		<action name="CUSwriteForm" class="cus.CUSwriteAction"
+			method="Cusform">
+			<result type="tiles">CUSwrite</result>
+		</action>
+		
+		<action name="QnAwriteAction" class="qna.QnAwriteAction">
+			
+			<result type="redirect-action">
+				<param name="actionName">QnAlistAction</param>
+			</result>
+		</action>
+		
+		<action name="CUSwriteAction" class="cus.CUSwriteAction">
+			
+			<result type="redirect-action">
+				<param name="actionName">CUSlistAction</param>
+			</result>
+		</action>
+		
+		<action name="QreplyForm" class="qna.QnAwriteAction"
+			method="reply">
+			<result type="chain">QminiwriteForm</result>
+		</action>
+		
+		<action name="CreplyForm" class="cus.CUSwriteAction"
+			method="reply">
+			<result type="chain">CminiwriteForm</result>
+		</action>
+		
+		<action name="QreplyAction" class="qna.QnAwriteAction">
+			
+			<result type="redirect-action">
+				<param name="actionName">QminiAction</param>
+			</result>
+		</action>
+		
+		<action name="CreplyAction" class="cus.CUSwriteAction">
+			
+			<result type="redirect-action">
+				<param name="actionName">CminiAction</param>
+			</result>
+		</action>
+		
+		<action name="QnAviewAction" class="qna.QnAviewAction">
+			<result type="tiles">QviewCheck</result>
+		</action>
+		
+		<action name="CUSviewAction" class="qna.QnAviewAction">
+			<result type="tiles">CviewCheck</result>
+		</action>
+		
+		<action name="fileDownloadAction" class="qna.QnAviewAction"
+			method="download">
+			
+			<result name="success" type="stream">
+				<param name="contentType">binary/octet-stream</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">${contentDisposition}</param>
+				<param name="contentLength">${contentLength}</param>
+				<param name="bufferSize">4096</param>
+			</result>
+		</action>
+		
+		<action name="checkForm" class="qna.QnAviewAction"
+			method="checkForm">
+			<result>/QnA/checkForm.jsp</result>
+		</action>
+		
+		<action name="checkAction" class="qna.QnAviewAction"
+			method="checkAction">
+			<result name="error">/QnA/checkError.jsp</result>
+			<result name="success" type="tiles">QnAview</result>
+		</action>
+		
+		<action name="checkviewAction" class="qna.QnAviewAction"
+			method="checkAction">
+			<result name="error">/QnA/checkError.jsp</result>
+			<result name="success" type="tiles">CUSview</result>
+		</action>
+		
+		<action name="QnAmodifyForm" class="qna.QnAviewAction">
+			<result type="chain">QnAwriteForm</result>
+		</action>
+		
+		<action name="CUSmodifyForm" class="qna.QnAviewAction">
+			<result type="chain">CUSwriteForm</result>
+		</action>
+		
+		<action name="QnAmodifyAction" class="qna.QnAmodifyAction">
+			<result type="chain">QnAlistAction</result>
+		</action>
+		
+		<action name="CUSmodifyAction" class="cus.CUSmodifyAction">
+			<result type="chain">CUSlistAction</result>
+		</action>
+		
+		<action name="QnAdeleteAction" class="qna.QnAdeleteAction">
+			<result type="chain">QnAlistAction</result>
+		</action>
+		
+		<action name="CUSdeleteAction" class="cus.CUSdeleteAction">
+			<result type="chain">CUSlistAction</result>
+		</action>
+		
+		<action name="searchFormAction" class="qna.QnAlistAction"
+			method="searchForm">
+			<result>/QnA/search.jsp</result>
+		</action>
+		
+		<action name="searchlistAction" class="qna.QnAlistAction"
+			method="searchList">
+			<result type="tiles">Searchlist</result>
+		</action>
+		
+		<action name="QminiAction" class="admin.adminQnA">
+			<result type="tiles">QnA</result>
+		</action>
+		
+		<action name="CminiAction" class="admin.adminCUS">
+			<!-- <result>/admin/adCus.jsp</result> -->
+			<result type="tiles">CUS</result>
+		</action>
+		
+		<action name="QminiviewAction" class="admin.adminView">
+			<result type="tiles">QNAView</result>
+		</action>
+		
+		<action name="CminiviewAction" class="admin.adminView">
+			<result type="tiles">CUSView</result>
+		</action>
+		
+		<action name="CminimodifyForm" class="qna.QnAviewAction">
+			<result type="chain">CminiwriteForm</result>
+		</action>
+		
+		<action name="CminimodifyAction" class="cus.CUSmodifyAction">
+			<result type="chain">CminiviewAction</result>
+		</action>
+		
+		<action name="CminiwriteForm" class="cus.CUSwriteAction"
+			method="Cusform">
+			<result type="tiles">ADCUSWRITE</result>
+		</action>
+		
+		<action name="checkadminForm" class="qna.QnAviewAction"
+			method="checkForm">
+			<result>/admin/checkForm.jsp</result>
+		</action>
+		
+		<action name="CminideleteAction" class="cus.CUSdeleteAction">
+			<result type="chain">CminiAction</result>
+		</action>
+		
+		<action name="QminimodifyForm" class="qna.QnAviewAction">
+			<result type="chain">QminiwriteForm</result>
+		</action>
+		
+		<action name="QminimodifyAction" class="qna.QnAmodifyAction">
+			<result type="chain">QminiviewAction</result>
+		</action>
+		
+		<action name="QminiwriteForm" class="qna.QnAwriteAction"
+			method="QnAform">
+			<result type="tiles">ADQnAWRITE</result>
+		</action>
+		
+		<action name="QminideleteAction" class="qna.QnAdeleteAction">
+			<result type="chain">QminiAction</result>
+		</action>
+	</package>
+
+	<!-- notice -->
+
+	<constant name="struts.multipart.maxSize" value="104857600" />
+
+	<package name="notice" namespace="/notice"
+		extends="struts-default,tiles-default">
+		<!-- 글로벌 예외 처리 화면 설정 -->
+
+		<!-- 게시판 리스트 액션 -->
+		<action name="noticeListAction" class="notice.noticeListAction">
+			<result type="tiles">notice</result>
+		</action>
+
+		<!-- 게시판 리스트 액션 (관리자) -->
+		<action name="noticeAListAction"
+			class="notice.noticeListAction">
+			<result type="tiles">NOTICE</result>
+			<!-- <result>/noticeAdmin/noticeList.jsp</result> -->
+		</action>
+
+
+		<!-- 게시판 글쓰기 액션 (관리자) -->
+		<action name="noticeAWriteForm"
+			class="notice.noticeWriteAction" method="form">
+			<result type="tiles">NOTICEWRITE</result>
+		</action>
+
+		<action name="noticeAWriteAction"
+			class="notice.noticeWriteAction">
+			<result type="redirect-action">
+				<param name="actionName">noticeAListAction</param>
+			</result>
+		</action>
+
+
+		<!-- 게시판 글 읽기 액션 -->
+		<action name="noticeViewAction" class="notice.noticeViewAction">
+			<result type="tiles">noticeV</result>
+		</action>
+		<!-- 게시판 글 읽기 액션(관리자) -->
+
+		<action name="noticeAViewAction"
+			class="notice.noticeAViewAction">
+			<result type="tiles">NOTICEView</result>
+		</action>
+
+
+		<!-- 게시판 수정 액션(관리자) -->
+		<action name="noticeAModifyForm"
+			class="notice.noticeAViewAction">
+			<result type="chain">noticeAWriteForm</result>
+		</action>
+		<action name="noticeAModifyAction"
+			class="notice.noticeModifyAction">
+			<result type="chain">noticeAViewAction</result>
+		</action>
+
+
+		<!-- 게시판 삭제 액션 (관리자) -->
+		<action name="noticeADeleteAction"
+			class="notice.noticeDeleteAction">
+			<result type="chain">noticeAListAction</result>
+		</action>
+
+		<action name="checkForm" class="notice.noticeAViewAction"
+			method="checkForm">
+			<result>/noticeAdmin/checkForm.jsp</result>
+		</action>
+	</package>
+
+
+</struts>
+
+
+
+
+
